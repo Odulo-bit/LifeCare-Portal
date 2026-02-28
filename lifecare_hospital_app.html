@@ -576,6 +576,27 @@
     .hero-images { display: none; }
   }
 </style>
+<script>
+  // Define critical functions early so all buttons work immediately
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var el = document.getElementById(id);
+    if (el) el.classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function switchAuthTab(tab) {
+    var lp = document.getElementById('loginPanel');
+    var sp = document.getElementById('signupPanel');
+    var pp = document.getElementById('pendingPanel');
+    var tl = document.getElementById('tabLogin');
+    var ts = document.getElementById('tabSignup');
+    if (lp) lp.style.display = tab === 'login' ? 'block' : 'none';
+    if (sp) sp.style.display = tab === 'signup' ? 'block' : 'none';
+    if (pp) pp.style.display = 'none';
+    if (tl) { tl.style.color = tab === 'login' ? '#00A3C4' : '#6B8A99'; tl.style.borderBottomColor = tab === 'login' ? '#00A3C4' : 'transparent'; }
+    if (ts) { ts.style.color = tab === 'signup' ? '#00A3C4' : '#6B8A99'; ts.style.borderBottomColor = tab === 'signup' ? '#00A3C4' : 'transparent'; }
+  }
+</script>
 </head>
 <body>
 
@@ -2172,19 +2193,10 @@
     </table>`;
   }
 
-  // ── Expose all functions globally so inline onclick handlers always find them ──
-  window.showPage = function(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0,0);
-  }
-  function showPage(id) { window.showPage(id); }
-
   function demoLogin() {
     isDemo = true;
     docStore = demoDocStore;
     setupDashboard('doctor', 'LC-DEMO-0001');
-    // Override name for demo account
     document.getElementById('sidebarName').textContent = 'Dr. Farida';
     document.getElementById('sidebarRole').textContent = 'Senior Doctor (Demo)';
     document.getElementById('sideAvatar').textContent = 'DF';
@@ -2195,16 +2207,11 @@
     showPage('dashboard');
   }
 
-  // ── AUTH TAB SWITCHER ──
-  window.switchAuthTab = function(tab) {
-    document.getElementById('loginPanel').style.display = tab === 'login' ? 'block' : 'none';
-    document.getElementById('signupPanel').style.display = tab === 'signup' ? 'block' : 'none';
-    document.getElementById('pendingPanel').style.display = 'none';
-    document.getElementById('tabLogin').style.color = tab === 'login' ? 'var(--teal)' : 'var(--gray)';
-    document.getElementById('tabLogin').style.borderBottomColor = tab === 'login' ? 'var(--teal)' : 'transparent';
-    document.getElementById('tabSignup').style.color = tab === 'signup' ? 'var(--teal)' : 'var(--gray)';
-    document.getElementById('tabSignup').style.borderBottomColor = tab === 'signup' ? 'var(--teal)' : 'transparent';
-  }
+  // ── Expose all functions globally so inline onclick handlers always find them ──
+  window.showPage = showPage;
+  window.switchAuthTab = switchAuthTab;
+  window.demoLogin = demoLogin;
+  window.doLogin = doLogin;
 
   window.doSignup = function() {
     const name = document.getElementById('signupName').value.trim();
@@ -2493,4 +2500,16 @@
     div.className = 'msg own';
     const now = new Date();
     const time = now.toLocaleTimeString('en-US', {hour:'numeric',minute:'2-digit'});
-    div.innerHTML = '<div class="msg-avatar" style="background:var(--teal);">' + avatar + '</div><div class="
+    div.innerHTML = '<div class="msg-avatar" style="background:var(--teal);">' + avatar + '</div><div class="msg-bubble"><span class="msg-time">' + time + '</span>' + text + '</div></div>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    input.value = '';
+  }
+  window.sendMsg = sendMsg;
+  window.submitDoc = submitDoc;
+  window.switchDocTab = switchDocTab;
+  window.renderOrderingSection = renderOrderingSection;
+
+</script>
+</body>
+</html>
