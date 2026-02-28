@@ -575,6 +575,189 @@
     .content-grid { grid-template-columns: 1fr; }
     .hero-images { display: none; }
   }
+
+  /* ══════════════════════════════
+     MOBILE RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 768px) {
+
+    /* Landing page */
+    .landing-nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero-section { padding: 40px 20px 30px; flex-direction: column; gap: 24px; }
+    .hero-title { font-size: 28px !important; }
+    .hero-subtitle { font-size: 14px; }
+    .hero-actions { flex-direction: column; gap: 10px; }
+    .hero-actions button { width: 100%; }
+    .hero-images { display: none; }
+    .stats-bar { flex-wrap: wrap; gap: 0; }
+    .stat-item { width: 50%; padding: 16px 10px; }
+
+    /* Login page */
+    .login-container { flex-direction: column; max-width: 100%; border-radius: 0; min-height: 100vh; }
+    .login-side { display: none; }
+    .login-form-side { padding: 24px 20px; flex: 1; }
+
+    /* Dashboard layout */
+    #dashboard { flex-direction: column !important; }
+    .sidebar {
+      width: 100% !important;
+      height: auto !important;
+      min-height: unset !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      padding: 0 !important;
+      overflow-x: auto;
+      overflow-y: hidden;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: auto !important;
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+    }
+    .sidebar-logo { display: none !important; }
+    .sidebar-role { display: none !important; }
+    .sidebar-logout { display: none !important; }
+    .sidebar-menu {
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto;
+      width: 100%;
+      padding: 0 !important;
+      gap: 0 !important;
+      scrollbar-width: none;
+    }
+    .sidebar-menu::-webkit-scrollbar { display: none; }
+    .menu-section { display: none !important; }
+    .menu-item {
+      flex-direction: column !important;
+      min-width: 64px !important;
+      padding: 8px 6px !important;
+      font-size: 10px !important;
+      gap: 2px !important;
+      border-radius: 0 !important;
+      border-left: none !important;
+      border-top: 3px solid transparent;
+      text-align: center;
+      white-space: nowrap;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    .menu-item.active {
+      border-left: none !important;
+      border-top: 3px solid var(--teal) !important;
+      background: rgba(0,163,196,0.1) !important;
+    }
+    .menu-item .icon { font-size: 18px !important; }
+    .menu-item .badge {
+      position: absolute;
+      top: 4px;
+      right: 8px;
+      font-size: 9px;
+    }
+    .menu-item span:not(.icon):not(.badge) { font-size: 9px; }
+
+    /* Main content */
+    .main-content {
+      margin-left: 0 !important;
+      padding-bottom: 70px !important;
+    }
+    .top-bar {
+      padding: 12px 16px !important;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .top-bar h1 { font-size: 16px !important; }
+    .top-search { width: 120px !important; font-size: 12px !important; }
+    .dashboard-content { padding: 12px !important; }
+
+    /* Cards */
+    .card { border-radius: 10px; }
+    .card-header { padding: 12px 14px !important; flex-wrap: wrap; gap: 8px; }
+    .card-header h3 { font-size: 14px !important; }
+    .card-body { padding: 12px !important; }
+
+    /* Metrics */
+    .metrics-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+    .metric-card { padding: 14px !important; }
+    .metric-value { font-size: 24px !important; }
+
+    /* Tables - make scrollable */
+    .schedule-table { font-size: 11px !important; }
+    table { display: block; overflow-x: auto; white-space: nowrap; }
+
+    /* Forms */
+    .form-group { margin-bottom: 12px; }
+    .form-group label { font-size: 12px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { font-size: 14px !important; padding: 10px !important; }
+    .login-submit { padding: 14px !important; font-size: 15px !important; }
+
+    /* Grid layouts - stack on mobile */
+    div[style*="grid-template-columns: 1fr 1fr"],
+    div[style*="grid-template-columns:1fr 1fr"] { 
+      display: flex !important; 
+      flex-direction: column !important; 
+    }
+    div[style*="grid-template-columns: 1fr 1.4fr"],
+    div[style*="grid-template-columns:1fr 1.4fr"],
+    div[style*="grid-template-columns: 1fr 1.2fr"],
+    div[style*="grid-template-columns:1fr 1.2fr"],
+    div[style*="grid-template-columns: 1.4fr 1fr"],
+    div[style*="grid-template-columns:1.4fr 1fr"],
+    div[style*="grid-template-columns: 1fr 1.6fr"],
+    div[style*="grid-template-columns:1fr 1.6fr"] {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    div[style*="grid-template-columns: 1fr 1fr 1fr"],
+    div[style*="grid-template-columns:1fr 1fr 1fr"],
+    div[style*="grid-template-columns: 1fr 1fr 1fr 1fr"],
+    div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    /* Welcome banner */
+    .welcome-banner { flex-direction: column !important; gap: 8px; padding: 16px !important; }
+    .welcome-date { text-align: left !important; }
+
+    /* Lounge chat */
+    .lounge-container { flex-direction: column !important; }
+    .chat-window { min-height: 300px !important; }
+
+    /* Contacts section map */
+    iframe { height: 200px !important; }
+
+    /* Auth tabs */
+    #tabLogin, #tabSignup { padding: 10px 8px !important; font-size: 13px !important; }
+
+    /* IP section */
+    #sec-ip .card { margin-bottom: 12px; }
+
+    /* Admission form grids */
+    #admitForm div[style*="grid-template-columns"] {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: 24px !important; }
+    .metrics-grid { grid-template-columns: 1fr 1fr !important; }
+    .metric-value { font-size: 20px !important; }
+    .emergency-btn { font-size: 12px !important; padding: 8px 12px !important; }
+    .top-bar-right { gap: 8px !important; }
+    .top-search { display: none !important; }
+  }
+
+  /* Mobile hamburger toggle for sidebar on tablet */
+  @media (min-width: 769px) {
+    .mobile-header { display: none !important; }
+  }
 </style>
 <script>
   // Define critical functions early so all buttons work immediately
@@ -595,6 +778,107 @@
     if (pp) pp.style.display = 'none';
     if (tl) { tl.style.color = tab === 'login' ? '#00A3C4' : '#6B8A99'; tl.style.borderBottomColor = tab === 'login' ? '#00A3C4' : 'transparent'; }
     if (ts) { ts.style.color = tab === 'signup' ? '#00A3C4' : '#6B8A99'; ts.style.borderBottomColor = tab === 'signup' ? '#00A3C4' : 'transparent'; }
+  }
+</script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+  // ── FIREBASE INIT ──
+  const firebaseConfig = {
+    apiKey: "AIzaSyCuK8Hb3XyD0sqzk3Q8kEEGaYZK9Vi5ixk",
+    authDomain: "lifecare-portal.firebaseapp.com",
+    databaseURL: "https://lifecare-portal-default-rtdb.firebaseio.com",
+    projectId: "lifecare-portal",
+    storageBucket: "lifecare-portal.firebasestorage.app",
+    messagingSenderId: "874288828262",
+    appId: "1:874288828262:web:f2f9b82b2de3595d50c2a7"
+  };
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.database();
+
+  // ── FIREBASE HELPERS ──
+  function fbSet(path, data) { return db.ref(path).set(data); }
+  function fbPush(path, data) { return db.ref(path).push(data); }
+  function fbRemove(path) { return db.ref(path).remove(); }
+  function fbUpdate(path, data) { return db.ref(path).update(data); }
+  function fbOn(path, cb) { db.ref(path).on('value', snap => cb(snap.val() || {})); }
+  function fbOnce(path, cb) { db.ref(path).once('value', snap => cb(snap.val() || {})); }
+
+  // ── SHARED LIVE DATA (Firebase) ──
+  var patients = [];
+  var labRequests = [];
+  var prescriptions = [];
+  var stockCatalogue = [];
+  var allOrders = [];
+  var scheduleEntries = [];
+
+  // Listen for real-time updates
+  function initFirebaseListeners() {
+    fbOn('patients', data => {
+      patients = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      patients.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderPatients();
+      updateOverviewStats();
+    });
+    fbOn('lab', data => {
+      labRequests = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      labRequests.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderLab();
+    });
+    fbOn('prescriptions', data => {
+      prescriptions = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      prescriptions.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderPharmacy();
+    });
+    fbOn('stock', data => {
+      stockCatalogue = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      renderStockCatalogue();
+      renderStockBrowse();
+    });
+    fbOn('orders', data => {
+      allOrders = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      allOrders.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderMyOrders();
+      renderIncomingOrders();
+      renderAdminOrders && renderAdminOrders();
+    });
+    fbOn('schedule', data => {
+      scheduleEntries = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      scheduleEntries.sort((a,b) => (a.time||'').localeCompare(b.time||''));
+      renderSchedule();
+    });
+    fbOn('docStore/notice', data => {
+      liveDocStore.notice = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      liveDocStore.notice.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderDocList('notice');
+      renderAdminAnnouncements && renderAdminAnnouncements();
+    });
+    fbOn('docStore/handover', data => {
+      liveDocStore.handover = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      liveDocStore.handover.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderDocList('handover');
+    });
+    fbOn('docStore/clinical', data => {
+      liveDocStore.clinical = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      liveDocStore.clinical.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderDocList('clinical');
+    });
+    fbOn('docStore/incident', data => {
+      liveDocStore.incident = data ? Object.entries(data).map(([k,v]) => ({...v, _key:k})) : [];
+      liveDocStore.incident.sort((a,b) => (b.ts||0)-(a.ts||0));
+      renderDocList('incident');
+      renderAdminIncidents && renderAdminIncidents();
+    });
+  }
+
+  function updateOverviewStats() {
+    const admEl = document.getElementById('stat-admitted');
+    const critEl = document.getElementById('stat-critical');
+    const dischEl = document.getElementById('stat-discharge');
+    if (admEl) admEl.textContent = patients.filter(p=>p.status==='admitted'||p.status==='observation').length;
+    if (critEl) critEl.textContent = patients.filter(p=>p.status==='critical').length;
+    if (dischEl) dischEl.textContent = patients.filter(p=>p.status==='discharge').length;
   }
 </script>
 </head>
@@ -974,6 +1258,16 @@
 
   <!-- MAIN -->
   <div class="main-content">
+    <div class="mobile-header" style="display:none;position:sticky;top:0;z-index:50;background:var(--navy);color:white;padding:10px 16px;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;" id="mobileAvatar">DR</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;" id="mobileName">Staff</div>
+          <div style="font-size:10px;opacity:0.7;" id="mobileRole">Loading...</div>
+        </div>
+      </div>
+      <div style="font-size:11px;opacity:0.8;" id="mobileSectionTitle">Dashboard</div>
+    </div>
     <div class="top-bar">
       <h1 id="sectionTitle">Dashboard Overview</h1>
       <div id="demoBanner" style="display:none;background:#f39c12;color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:0.5px;">🎯 DEMO MODE — Sample Data Only</div>
@@ -1248,20 +1542,37 @@
 
       <!-- ─── PATIENTS ─── -->
       <div id="sec-patients" class="section">
-        <div class="card" style="margin-bottom:20px;">
+        <div class="card">
           <div class="card-header">
-            <h3>All Patients (12 Active)</h3>
-            <button style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">+ Admit Patient</button>
+            <h3>👥 Patient Management</h3>
+            <button onclick="showAdmitForm()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">+ Admit Patient</button>
           </div>
           <div class="card-body">
-            <table class="schedule-table" style="width:100%">
-              <tr><th>Patient</th><th>Ward/Bed</th><th>Diagnosis</th><th>Doctor</th><th>Status</th><th>Action</th></tr>
-              <tr><td>Kwame Boateng, 52</td><td>Ward 3, Bed 12</td><td>Hypertension</td><td>Dr. Farida</td><td><span class="patient-status status-admitted">Admitted</span></td><td><a style="color:var(--teal);font-size:13px;" href="#">View</a></td></tr>
-              <tr><td>Abena Nkrumah, 68</td><td>ICU, Bed 2</td><td>Cardiac Arrest</td><td>Dr. Mensah</td><td><span class="patient-status status-critical">Critical</span></td><td><a style="color:var(--teal);font-size:13px;" href="#">View</a></td></tr>
-              <tr><td>Kofi Asante, 34</td><td>Ward 1, Bed 7</td><td>Post-Appendectomy</td><td>Dr. Farida</td><td><span class="patient-status status-discharge">Discharge</span></td><td><a style="color:var(--teal);font-size:13px;" href="#">View</a></td></tr>
-              <tr><td>Mary Adjei, 28</td><td>Maternity, Bed 4</td><td>Labour</td><td>Dr. Owusu</td><td><span class="patient-status status-admitted">Admitted</span></td><td><a style="color:var(--teal);font-size:13px;" href="#">View</a></td></tr>
-              <tr><td>James Darko, 45</td><td>Ward 2, Bed 9</td><td>Pneumonia</td><td>Dr. Farida</td><td><span class="patient-status status-admitted">Admitted</span></td><td><a style="color:var(--teal);font-size:13px;" href="#">View</a></td></tr>
-            </table>
+            <div id="admitForm" style="display:none;background:var(--off-white);border-radius:8px;padding:16px;margin-bottom:16px;">
+              <h4 style="margin-bottom:12px;">New Patient Admission</h4>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                <div class="form-group"><label>Full Name</label><input type="text" id="pt-name" placeholder="Patient full name"></div>
+                <div class="form-group"><label>Age</label><input type="number" id="pt-age" placeholder="Age" min="0"></div>
+                <div class="form-group"><label>Ward / Bed</label><input type="text" id="pt-ward" placeholder="e.g. ICU Bed 3"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                <div class="form-group"><label>Diagnosis</label><input type="text" id="pt-diagnosis" placeholder="Primary diagnosis"></div>
+                <div class="form-group"><label>Attending Doctor</label><input type="text" id="pt-doctor" placeholder="Dr. Name"></div>
+                <div class="form-group"><label>Status</label>
+                  <select id="pt-status">
+                    <option value="admitted">Admitted</option>
+                    <option value="critical">Critical</option>
+                    <option value="discharge">Ready for Discharge</option>
+                    <option value="observation">Observation</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="admitPatient()" style="background:var(--teal);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;">Admit Patient</button>
+                <button onclick="document.getElementById(&apos;admitForm&apos;).style.display=&apos;none&apos;" style="background:var(--gray);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;">Cancel</button>
+              </div>
+            </div>
+            <div id="patientsList"></div>
           </div>
         </div>
       </div>
@@ -1270,59 +1581,81 @@
       <div id="sec-schedule" class="section">
         <div class="card">
           <div class="card-header">
-            <h3>📅 Today's Schedule — Friday, Feb 27</h3>
+            <h3>📅 My Schedule</h3>
+            <button onclick="showAddShiftForm()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">+ Add Entry</button>
           </div>
           <div class="card-body">
-            <table class="schedule-table">
-              <tr><th>Time</th><th>Patient</th><th>Type</th><th>Location</th><th>Status</th></tr>
-              <tr><td>07:00 AM</td><td>All Staff</td><td>🔁 Day Shift Handover</td><td>All Wards</td><td><span class="patient-status status-discharge">Done</span></td></tr>
-              <tr><td>08:00 AM</td><td>Kwame Boateng</td><td>Ward Round</td><td>Male Ward</td><td><span class="patient-status status-admitted">Scheduled</span></td></tr>
-              <tr><td>09:30 AM</td><td>New Consultation</td><td>OPD Consultation</td><td>Clinic 4</td><td><span class="patient-status status-admitted">Scheduled</span></td></tr>
-              <tr><td>11:00 AM</td><td>Kofi Asante</td><td>Discharge Review</td><td>General Ward</td><td><span class="patient-status status-discharge">Discharge</span></td></tr>
-              <tr><td>02:00 PM</td><td>Surgical Team</td><td>Team Briefing</td><td>Conference Rm A</td><td><span class="patient-status status-admitted">Pending</span></td></tr>
-              <tr><td>04:00 PM</td><td>Abena Nkrumah</td><td>ICU Review</td><td>ICU</td><td><span class="patient-status status-critical">Critical Review</span></td></tr>
-              <tr><td>06:30 PM</td><td>All Staff</td><td>🌙 Night Shift Handover</td><td>All Wards</td><td><span class="patient-status status-admitted">Upcoming</span></td></tr>
-              <tr><td>07:00 PM</td><td>—</td><td>Night Shift Begins</td><td>All Wards</td><td><span class="patient-status" style="background:#1a1a2e;color:#a78bfa;">Night</span></td></tr>
-            </table>
+            <div id="shiftForm" style="display:none;background:var(--off-white);border-radius:8px;padding:16px;margin-bottom:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                <div class="form-group"><label>Time</label><input type="time" id="sh-time"></div>
+                <div class="form-group"><label>Activity</label><input type="text" id="sh-activity" placeholder="e.g. Ward Round, OPD..."></div>
+                <div class="form-group"><label>Location</label><input type="text" id="sh-location" placeholder="e.g. ICU, Clinic 4..."></div>
+                <div class="form-group"><label>Status</label>
+                  <select id="sh-status"><option value="scheduled">Scheduled</option><option value="done">Done</option><option value="pending">Pending</option></select>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="addShiftEntry()" style="background:var(--teal);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;">Add Entry</button>
+                <button onclick="document.getElementById('shiftForm').style.display='none'" style="background:var(--gray);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;">Cancel</button>
+              </div>
+            </div>
+            <div id="scheduleList"></div>
           </div>
         </div>
       </div>
 
-      <!-- ─── LAB ─── -->
+            <!-- ─── LAB ─── -->
       <div id="sec-lab" class="section">
         <div class="card">
-          <div class="card-header"><h3>🧪 Laboratory Results</h3>
-            <button style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">+ New Test Request</button>
+          <div class="card-header"><h3>🧪 Laboratory — Test Requests & Results</h3>
+            <button onclick="showLabForm()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">+ New Test Request</button>
           </div>
           <div class="card-body">
-            <table class="schedule-table">
-              <tr><th>Test</th><th>Patient</th><th>Requested</th><th>Result</th><th>Status</th></tr>
-              <tr><td>Full Blood Count</td><td>Kwame Boateng</td><td>Today 07:00</td><td>—</td><td><span class="patient-status status-admitted">Pending</span></td></tr>
-              <tr><td>Troponin I</td><td>Abena Nkrumah</td><td>Today 06:30</td><td>🔴 High 2.4</td><td><span class="patient-status status-critical">Abnormal</span></td></tr>
-              <tr><td>Chest X-Ray</td><td>James Darko</td><td>Yesterday</td><td>See report</td><td><span class="patient-status status-discharge">Ready</span></td></tr>
-              <tr><td>Blood Glucose</td><td>Mary Adjei</td><td>Today 08:00</td><td>5.4 mmol/L</td><td><span class="patient-status status-discharge">Normal</span></td></tr>
-            </table>
+            <div id="labForm" style="display:none;background:var(--off-white);border-radius:8px;padding:16px;margin-bottom:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                <div class="form-group"><label>Test Name</label><input type="text" id="lab-test" placeholder="e.g. Full Blood Count"></div>
+                <div class="form-group"><label>Patient Name / ID</label><input type="text" id="lab-patient" placeholder="Patient name or IP number"></div>
+                <div class="form-group"><label>Urgency</label>
+                  <select id="lab-urgency"><option value="routine">Routine</option><option value="urgent">Urgent</option><option value="stat">STAT</option></select>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="addLabRequest()" style="background:var(--teal);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;">Submit Request</button>
+                <button onclick="document.getElementById('labForm').style.display='none'" style="background:var(--gray);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;">Cancel</button>
+              </div>
+            </div>
+            <div id="labList"></div>
           </div>
         </div>
       </div>
 
-      <!-- ─── PHARMACY ─── -->
+            <!-- ─── PHARMACY ─── -->
       <div id="sec-pharmacy" class="section">
         <div class="card">
-          <div class="card-header"><h3>💊 Pharmacy — Active Prescriptions</h3></div>
+          <div class="card-header"><h3>💊 Pharmacy — Prescriptions & Dispensing</h3>
+            <button onclick="showPrescForm()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">+ Add Prescription</button>
+          </div>
           <div class="card-body">
-            <table class="schedule-table">
-              <tr><th>Drug</th><th>Patient</th><th>Dose</th><th>Frequency</th><th>Stock</th><th>Status</th></tr>
-              <tr><td>Amlodipine 5mg</td><td>Kwame Boateng</td><td>1 tab</td><td>OD</td><td style="color:var(--green)">✅ In Stock</td><td><span class="patient-status status-discharge">Dispensed</span></td></tr>
-              <tr><td>Heparin 5000u</td><td>Abena Nkrumah</td><td>5000 units</td><td>BD SC</td><td style="color:var(--green)">✅ In Stock</td><td><span class="patient-status status-admitted">Active</span></td></tr>
-              <tr><td>Amoxicillin 500mg</td><td>James Darko</td><td>1 cap</td><td>TDS</td><td style="color:var(--orange)">⚠️ Low Stock</td><td><span class="patient-status status-admitted">Active</span></td></tr>
-              <tr><td>Oxytocin 10IU</td><td>Mary Adjei</td><td>10 IU</td><td>PRN</td><td style="color:var(--green)">✅ In Stock</td><td><span class="patient-status status-admitted">Standby</span></td></tr>
-            </table>
+            <div id="prescForm" style="display:none;background:var(--off-white);border-radius:8px;padding:16px;margin-bottom:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                <div class="form-group"><label>Drug Name</label><input type="text" id="rx-drug" placeholder="e.g. Amlodipine 5mg"></div>
+                <div class="form-group"><label>Patient</label><input type="text" id="rx-patient" placeholder="Patient name"></div>
+                <div class="form-group"><label>Dose & Frequency</label><input type="text" id="rx-dose" placeholder="e.g. 1 tab OD"></div>
+                <div class="form-group"><label>Status</label>
+                  <select id="rx-status"><option value="pending">Pending</option><option value="dispensed">Dispensed</option><option value="active">Active</option></select>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="addPrescription()" style="background:var(--teal);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;">Add Prescription</button>
+                <button onclick="document.getElementById('prescForm').style.display='none'" style="background:var(--gray);color:white;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;">Cancel</button>
+              </div>
+            </div>
+            <div id="prescList"></div>
           </div>
         </div>
       </div>
 
-      <!-- ─── DOCTORS LOUNGE ─── -->
+            <!-- ─── DOCTORS LOUNGE ─── -->
       <div id="sec-lounge" class="section">
         <div style="margin-bottom:16px;">
           <h2 style="font-size:22px;color:var(--navy);">🛋 Doctors Lounge — Internal Discussion</h2>
@@ -1964,53 +2297,198 @@
     }
   }
 
+  // ─── PATIENTS (Firebase) ───
+  window.showAdmitForm = function() { document.getElementById('admitForm').style.display = 'block'; }
+  window.admitPatient = function() {
+    const name = document.getElementById('pt-name').value.trim();
+    const age = document.getElementById('pt-age').value;
+    const ward = document.getElementById('pt-ward').value.trim();
+    const diagnosis = document.getElementById('pt-diagnosis').value.trim();
+    const doctor = document.getElementById('pt-doctor').value.trim();
+    const status = document.getElementById('pt-status').value;
+    if (!name || !ward || !diagnosis) { alert('Please fill in Name, Ward and Diagnosis.'); return; }
+    const pt = { name, age, ward, diagnosis, doctor, status, admittedBy: document.getElementById('sidebarName').textContent, date: new Date().toLocaleDateString('en-GB'), ts: Date.now() };
+    fbPush('patients', pt).then(() => {
+      ['pt-name','pt-age','pt-ward','pt-diagnosis','pt-doctor'].forEach(id => { const e=document.getElementById(id); if(e) e.value=''; });
+      document.getElementById('admitForm').style.display = 'none';
+    });
+  }
+  function renderPatients() {
+    const el = document.getElementById('patientsList'); if (!el) return;
+    if (!patients.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;font-size:13px;">No patients admitted yet. Click "+ Admit Patient" to add one.</div>'; return; }
+    el.innerHTML = `<table class="schedule-table"><tr><th>Patient</th><th>Age</th><th>Ward/Bed</th><th>Diagnosis</th><th>Doctor</th><th>Admitted By</th><th>Status</th><th>Action</th></tr>
+      ${patients.map(p => {
+        const sc = p.status==='critical'?'status-critical':p.status==='discharge'?'status-discharge':'status-admitted';
+        return `<tr>
+          <td><strong>${p.name}</strong></td>
+          <td>${p.age||'—'}</td>
+          <td><span style="background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;">📍 ${p.ward}</span></td>
+          <td>${p.diagnosis}</td>
+          <td>${p.doctor||'—'}</td>
+          <td style="font-size:11px;">${p.admittedBy||'—'}</td>
+          <td><span class="patient-status ${sc}">${p.status}</span></td>
+          <td><button onclick="dischargePatient('${p._key}')" style="background:var(--orange);color:white;border:none;padding:3px 10px;border-radius:4px;cursor:pointer;font-size:11px;">Discharge</button></td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+  }
+  window.dischargePatient = function(key) {
+    if (confirm('Mark patient as discharged?')) {
+      fbUpdate('patients/'+key, { status: 'discharge' });
+    }
+  }
+
+  // ─── SCHEDULE (Firebase) ───
+  window.showAddShiftForm = function() { document.getElementById('shiftForm').style.display = 'block'; }
+  window.addShiftEntry = function() {
+    const time = document.getElementById('sh-time').value;
+    const activity = document.getElementById('sh-activity').value.trim();
+    const location = document.getElementById('sh-location').value.trim();
+    const status = document.getElementById('sh-status').value;
+    if (!time || !activity) { alert('Please enter time and activity.'); return; }
+    fbPush('schedule', { time, activity, location, status, addedBy: document.getElementById('sidebarName').textContent, ts: Date.now() }).then(() => {
+      ['sh-time','sh-activity','sh-location'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+      document.getElementById('shiftForm').style.display='none';
+    });
+  }
+  function renderSchedule() {
+    const el = document.getElementById('scheduleList'); if (!el) return;
+    if (!scheduleEntries.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;font-size:13px;">No schedule entries yet.</div>'; return; }
+    el.innerHTML = `<table class="schedule-table"><tr><th>Time</th><th>Activity</th><th>Location</th><th>Added By</th><th>Status</th><th>Action</th></tr>
+      ${scheduleEntries.map(s=>{const sc=s.status==='done'?'status-discharge':s.status==='pending'?'status-critical':'status-admitted';
+        return `<tr><td>${s.time}</td><td>${s.activity}</td><td>${s.location||'—'}</td><td style="font-size:11px;">${s.addedBy||'—'}</td>
+        <td><span class="patient-status ${sc}">${s.status}</span></td>
+        <td><button onclick="removeSchedule('${s._key}')" style="background:var(--red);color:white;border:none;padding:3px 10px;border-radius:4px;cursor:pointer;font-size:11px;">Remove</button></td></tr>`;
+      }).join('')}
+    </table>`;
+  }
+  window.removeSchedule = function(key) { fbRemove('schedule/'+key); }
+
+  // ─── LAB (Firebase) ───
+  window.showLabForm = function() { document.getElementById('labForm').style.display = 'block'; }
+  window.addLabRequest = function() {
+    const test = document.getElementById('lab-test').value.trim();
+    const patient = document.getElementById('lab-patient').value.trim();
+    const urgency = document.getElementById('lab-urgency').value;
+    if (!test || !patient) { alert('Please enter test name and patient.'); return; }
+    fbPush('lab', { test, patient, urgency, result: 'Pending', status: 'pending', requestedBy: document.getElementById('sidebarName').textContent, date: new Date().toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}), ts: Date.now() }).then(() => {
+      ['lab-test','lab-patient'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+      document.getElementById('labForm').style.display='none';
+    });
+  }
+  function renderLab() {
+    const el = document.getElementById('labList'); if (!el) return;
+    if (!labRequests.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;font-size:13px;">No lab requests yet.</div>'; return; }
+    el.innerHTML = `<table class="schedule-table"><tr><th>Test</th><th>Patient</th><th>Urgency</th><th>Requested By</th><th>Date</th><th>Result</th><th>Status</th></tr>
+      ${labRequests.map(r=>{const uc=r.urgency==='stat'?'#E53E3E':r.urgency==='urgent'?'#DD6B20':'#38A169';const sc=r.status==='ready'?'status-discharge':r.status==='abnormal'?'status-critical':'status-admitted';
+        return `<tr><td><strong>${r.test}</strong></td><td>${r.patient}</td>
+        <td style="color:${uc};font-weight:700;font-size:11px;">${r.urgency.toUpperCase()}</td>
+        <td style="font-size:11px;">${r.requestedBy||'—'}</td>
+        <td style="font-size:11px;">${r.date}</td><td>${r.result}</td>
+        <td><span class="patient-status ${sc}">${r.status}</span></td></tr>`;
+      }).join('')}
+    </table>`;
+  }
+
+  // ─── PHARMACY (Firebase) ───
+  window.showPrescForm = function() { document.getElementById('prescForm').style.display = 'block'; }
+  window.addPrescription = function() {
+    const drug = document.getElementById('rx-drug').value.trim();
+    const patient = document.getElementById('rx-patient').value.trim();
+    const dose = document.getElementById('rx-dose').value.trim();
+    const status = document.getElementById('rx-status').value;
+    if (!drug || !patient) { alert('Please enter drug name and patient.'); return; }
+    fbPush('prescriptions', { drug, patient, dose, status, prescribedBy: document.getElementById('sidebarName').textContent, date: new Date().toLocaleDateString('en-GB'), ts: Date.now() }).then(() => {
+      ['rx-drug','rx-patient','rx-dose'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+      document.getElementById('prescForm').style.display='none';
+    });
+  }
+  function renderPharmacy() {
+    const el = document.getElementById('prescList'); if (!el) return;
+    if (!prescriptions.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;font-size:13px;">No prescriptions yet.</div>'; return; }
+    el.innerHTML = `<table class="schedule-table"><tr><th>Drug</th><th>Patient</th><th>Dose</th><th>Prescribed By</th><th>Date</th><th>Status</th></tr>
+      ${prescriptions.map(p=>{const sc=p.status==='dispensed'?'status-discharge':p.status==='active'?'status-admitted':'status-critical';
+        return `<tr><td><strong>${p.drug}</strong></td><td>${p.patient}</td><td>${p.dose||'—'}</td>
+        <td>${p.prescribedBy}</td><td style="font-size:11px;">${p.date}</td>
+        <td><span class="patient-status ${sc}">${p.status}</span></td></tr>`;
+      }).join('')}
+    </table>`;
+  }
+
+  // Hook live renders into showSection
+  const _baseShowSection = window.showSection;
+  window.showSection = function(name, el) {
+    _baseShowSection(name, el);
+    if (name==='patients') renderPatients();
+    if (name==='schedule') renderSchedule();
+    if (name==='lab') renderLab();
+    if (name==='pharmacy') renderPharmacy();
+  }
+
+    // ── MOBILE RESPONSIVE ──
+  function updateMobileHeader() {
+    const mh = document.querySelector('.mobile-header');
+    if (!mh) return;
+    if (window.innerWidth <= 768) {
+      mh.style.display = 'flex';
+      const av = document.getElementById('sideAvatar');
+      const nm = document.getElementById('sidebarName');
+      const rl = document.getElementById('sidebarRole');
+      if (av) document.getElementById('mobileAvatar').textContent = av.textContent;
+      if (nm) document.getElementById('mobileName').textContent = nm.textContent;
+      if (rl) document.getElementById('mobileRole').textContent = rl.textContent;
+    } else {
+      mh.style.display = 'none';
+    }
+  }
+  window.addEventListener('resize', updateMobileHeader);
+  window.addEventListener('DOMContentLoaded', function() {
+    updateMobileHeader();
+    // Also update section title in mobile header when section changes
+    const origSS = window.showSection;
+    window.showSection = function(name, el) {
+      origSS(name, el);
+      const t = document.getElementById('sectionTitle');
+      const ms = document.getElementById('mobileSectionTitle');
+      if (t && ms) ms.textContent = t.textContent;
+      updateMobileHeader();
+    };
+  });
+
   // ─── ADMIN: VIEW ALL ORDERS ───
   window.renderAdminOrders = function() {
     const el = document.getElementById('adminOrdersContent');
     if (!el) return;
-    const orders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
-    if (!orders.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;">No orders placed yet across any department.</div>'; return; }
-    const sorted = [...orders].reverse();
+    if (!allOrders.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;">No orders placed yet across any department.</div>'; return; }
+    const sorted = [...allOrders].sort((a,b)=>(b.ts||0)-(a.ts||0));
     el.innerHTML = `<table class="schedule-table">
-      <tr><th>Order ID</th><th>Item</th><th>Qty</th><th>Department</th><th>Priority</th><th>Date</th><th>Status</th><th>Action</th></tr>
-      ${sorted.map((o, i) => {
+      <tr><th>Item</th><th>Qty</th><th>Department</th><th>Priority</th><th>Date</th><th>Status</th><th>Action</th></tr>
+      ${sorted.map((o) => {
         const pColor = o.priority === 'urgent' ? '#E53E3E' : o.priority === 'normal' ? '#DD6B20' : '#38A169';
         const sColor = o.status === 'fulfilled' ? '#38A169' : o.status === 'rejected' ? '#E53E3E' : '#DD6B20';
-        const realIdx = orders.indexOf(o);
         return `<tr>
-          <td style="font-size:11px;">${o.id}</td>
           <td><strong>${o.item}</strong></td>
           <td>${o.qty} ${o.unit}</td>
           <td>${o.dept}</td>
-          <td style="color:${pColor};font-weight:700;font-size:11px;">${o.priority.toUpperCase()}</td>
+          <td style="color:${pColor};font-weight:700;font-size:11px;">${(o.priority||'').toUpperCase()}</td>
           <td style="font-size:11px;">${o.date}</td>
-          <td style="color:${sColor};font-weight:700;font-size:11px;">${o.status.toUpperCase()}</td>
+          <td style="color:${sColor};font-weight:700;font-size:11px;">${(o.status||'').toUpperCase()}</td>
           <td>${o.status === 'pending' ? `
-            <button onclick="adminFulfil(${realIdx})" style="background:var(--green);color:white;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:2px;">✅</button>
-            <button onclick="adminReject(${realIdx})" style="background:var(--red);color:white;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;">❌</button>
+            <button onclick="adminFulfil('${o._key}')" style="background:var(--green);color:white;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:2px;">✅</button>
+            <button onclick="adminReject('${o._key}')" style="background:var(--red);color:white;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;">❌</button>
           ` : '—'}</td>
         </tr>`;
       }).join('')}
     </table>`;
   }
 
-  window.adminFulfil = function(i) {
-    const orders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
-    orders[i].status = 'fulfilled';
-    orders[i].fulfilledDate = new Date().toLocaleDateString('en-GB');
-    localStorage.setItem('lc_orders', JSON.stringify(orders));
-    allOrders.length = 0; allOrders.push(...orders);
-    renderAdminOrders();
+  window.adminFulfil = function(key) {
+    fbUpdate('orders/' + key, { status: 'fulfilled', fulfilledDate: new Date().toLocaleDateString('en-GB') });
   }
 
-  window.adminReject = function(i) {
+  window.adminReject = function(key) {
     const reason = prompt('Reason for rejection:') || 'Rejected by admin';
-    const orders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
-    orders[i].status = 'rejected';
-    orders[i].rejectReason = reason;
-    localStorage.setItem('lc_orders', JSON.stringify(orders));
-    allOrders.length = 0; allOrders.push(...orders);
-    renderAdminOrders();
+    fbUpdate('orders/' + key, { status: 'rejected', rejectReason: reason });
   }
 
   // ─── ADMIN: VIEW ALL INCIDENTS ───
@@ -2086,6 +2564,7 @@
     // Post to ALL departments by using 'All Departments' as dept
     const entry = { dept: 'All Departments', title, category, message, postedBy: 'Admin — Eugene Ambeth', postedAt: timeStr };
     liveDocStore.notice.unshift(entry);
+    fbPush('docStore/notice', {...entry, ts: Date.now()});
     document.getElementById('ann-title').value = '';
     document.getElementById('ann-message').value = '';
     renderAdminAnnouncements();
@@ -2112,12 +2591,7 @@
   const ipIssueLog = [];
   const returnLog = [];
 
-  // Load persisted data
-  let stockCatalogue = JSON.parse(localStorage.getItem('lc_stock') || '[]');
-  let allOrders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
-
-  function saveStock() { localStorage.setItem('lc_stock', JSON.stringify(stockCatalogue)); }
-  function saveOrders() { localStorage.setItem('lc_orders', JSON.stringify(allOrders)); }
+  // Firebase handles all persistence for stock and orders
 
   function renderOrderingSection() {
     const role = currentRole;
@@ -2219,8 +2693,8 @@
         <div style="color:var(--gray);margin:4px 0;">${s.category} &nbsp;|&nbsp; Stock: <strong>${s.qty} ${s.unit}</strong> &nbsp;|&nbsp; Reorder at: ${s.reorder} ${s.unit}</div>
         ${s.notes ? `<div style="color:var(--gray);font-size:11px;">${s.notes}</div>` : ''}
         <div style="display:flex;gap:8px;margin-top:8px;">
-          <button onclick="editStockItem(${i})" style="background:var(--teal);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">✏️ Edit</button>
-          <button onclick="deleteStockItem(${i})" style="background:var(--red);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">🗑 Remove</button>
+          <button onclick="editStockItem('${s._key}')" style="background:var(--teal);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">✏️ Edit</button>
+          <button onclick="deleteStockItem('${s._key}')" style="background:var(--red);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">🗑 Remove</button>
         </div>
       </div>`;
     }).join('');
@@ -2232,40 +2706,32 @@
     const unit = document.getElementById('stk-unit').value;
     const category = document.getElementById('stk-cat').value;
     const reorder = parseInt(document.getElementById('stk-reorder').value) || 0;
-    const status = document.getElementById('stk-status').value;
     const notes = document.getElementById('stk-notes').value.trim();
     if (!name) { alert('Please enter an item name.'); return; }
-    // Auto-status based on qty vs reorder level
-    let autoStatus = status;
-    if (qty === 0) autoStatus = 'out';
-    else if (qty <= reorder) autoStatus = 'low';
-    else autoStatus = 'available';
-    stockCatalogue.push({ name, qty, unit, category, reorder, status: autoStatus, notes, updated: new Date().toLocaleDateString('en-GB') });
-    saveStock();
-    document.getElementById('stk-name').value = '';
-    document.getElementById('stk-qty').value = '';
-    document.getElementById('stk-notes').value = '';
-    renderStockCatalogue();
-    alert('✅ ' + name + ' added to stock catalogue!');
+    const autoStatus = qty === 0 ? 'out' : qty <= reorder ? 'low' : 'available';
+    fbPush('stock', { name, qty, unit, category, reorder, status: autoStatus, notes, updated: new Date().toLocaleDateString('en-GB'), ts: Date.now() }).then(() => {
+      document.getElementById('stk-name').value = '';
+      document.getElementById('stk-qty').value = '';
+      document.getElementById('stk-notes').value = '';
+      alert('✅ ' + name + ' added to stock catalogue!');
+    });
   }
 
-  window.editStockItem = function(i) {
-    const s = stockCatalogue[i];
-    const newQty = prompt(`Update stock quantity for "${s.name}" (current: ${s.qty} ${s.unit}):`, s.qty);
+  window.editStockItem = function(key) {
+    const s = stockCatalogue.find(x => x._key === key);
+    if (!s) return;
+    const newQty = prompt('Update stock quantity for "' + s.name + '" (current: ' + s.qty + ' ' + s.unit + '):', s.qty);
     if (newQty === null) return;
     const qty = parseInt(newQty) || 0;
-    s.qty = qty;
-    s.status = qty === 0 ? 'out' : qty <= s.reorder ? 'low' : 'available';
-    s.updated = new Date().toLocaleDateString('en-GB');
-    saveStock();
-    renderStockCatalogue();
+    const status = qty === 0 ? 'out' : qty <= s.reorder ? 'low' : 'available';
+    fbUpdate('stock/' + key, { qty, status, updated: new Date().toLocaleDateString('en-GB') });
   }
 
-  window.deleteStockItem = function(i) {
-    if (confirm('Remove "' + stockCatalogue[i].name + '" from catalogue?')) {
-      stockCatalogue.splice(i, 1);
-      saveStock();
-      renderStockCatalogue();
+  window.deleteStockItem = function(key) {
+    const s = stockCatalogue.find(x => x._key === key);
+    if (!s) return;
+    if (confirm('Remove "' + s.name + '" from catalogue?')) {
+      fbRemove('stock/' + key);
     }
   }
 
@@ -2278,37 +2744,30 @@
       <tr><th>Order ID</th><th>Item</th><th>Qty</th><th>From Dept.</th><th>Priority</th><th>Date</th><th>Action</th></tr>
       ${incoming.map((o, i) => {
         const pColor = o.priority === 'urgent' ? '#E53E3E' : o.priority === 'normal' ? '#DD6B20' : '#38A169';
-        const realIdx = allOrders.indexOf(o);
         return `<tr>
-          <td style="font-size:11px;">${o.id}</td>
+          <td style="font-size:11px;">${o.id||o._key}</td>
           <td><strong>${o.item}</strong>${o.notes ? `<br><small style="color:var(--gray);">${o.notes}</small>` : ''}</td>
           <td>${o.qty} ${o.unit}</td>
           <td>${o.dept}</td>
           <td style="color:${pColor};font-weight:700;font-size:11px;">${o.priority.toUpperCase()}</td>
           <td style="font-size:11px;">${o.date}</td>
           <td>
-            <button onclick="fulfillOrder(${realIdx})" style="background:var(--green);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">✅ Fulfil</button>
-            <button onclick="rejectOrder(${realIdx})" style="background:var(--red);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">❌ Reject</button>
+            <button onclick="fulfillOrder('${o._key}')" style="background:var(--green);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">✅ Fulfil</button>
+            <button onclick="rejectOrder('${o._key}')" style="background:var(--red);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">❌ Reject</button>
           </td>
         </tr>`;
       }).join('')}
     </table>`;
   }
 
-  window.fulfillOrder = function(i) {
-    allOrders[i].status = 'fulfilled';
-    allOrders[i].fulfilledDate = new Date().toLocaleDateString('en-GB');
-    saveOrders();
-    renderIncomingOrders();
+  window.fulfillOrder = function(key) {
+    fbUpdate('orders/' + key, { status: 'fulfilled', fulfilledDate: new Date().toLocaleDateString('en-GB') });
     alert('✅ Order fulfilled!');
   }
 
-  window.rejectOrder = function(i) {
+  window.rejectOrder = function(key) {
     const reason = prompt('Reason for rejection (optional):') || 'No reason given';
-    allOrders[i].status = 'rejected';
-    allOrders[i].rejectReason = reason;
-    saveOrders();
-    renderIncomingOrders();
+    fbUpdate('orders/' + key, { status: 'rejected', rejectReason: reason });
   }
 
   function renderStockBrowse() {
@@ -2347,25 +2806,24 @@
   window.filterStock = function() { renderStockBrowse(); }
 
   window.placeOrder = function(itemName, unit) {
-    const key = itemName.replace(/\s/g,'_');
+    const key = itemName.replace(/[^a-zA-Z0-9]/g,'_');
     const qtyEl = document.getElementById('req-' + key);
     const priEl = document.getElementById('pri-' + key);
     const qty = parseInt(qtyEl ? qtyEl.value : 0);
     const priority = priEl ? priEl.value : 'normal';
     if (!qty || qty < 1) { alert('Please enter a valid quantity.'); return; }
     const order = {
-      id: 'ORD-' + Date.now(),
       item: itemName, qty, unit, priority, notes: '',
       dest: 'Procurement',
       dept: roleDeptMap[currentRole] || currentRole,
       status: 'pending',
-      date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})
+      date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}),
+      ts: Date.now()
     };
-    allOrders.push(order);
-    saveOrders();
-    if (qtyEl) qtyEl.value = '';
-    renderMyOrders();
-    alert('✅ Order for ' + itemName + ' submitted to Procurement!');
+    fbPush('orders', order).then(() => {
+      if (qtyEl) qtyEl.value = '';
+      alert('✅ Order for ' + itemName + ' submitted to Procurement!');
+    });
   }
 
   function renderMyOrders() {
@@ -2609,9 +3067,9 @@
       document.getElementById('adminAnnounceMenu').style.display = 'none';
     }
     refreshAllDocLists();
+    updateMobileHeader();
+    initFirebaseListeners();
   }
-
-  // ─── DOCUMENTATION SYSTEM ───
   const roleDeptMap = {
     doctor:         'Medical',
     nurse:          'Nursing',
@@ -2721,6 +3179,7 @@
     }
 
     docStore[type].unshift(entry);
+    fbPush('docStore/' + type, {...entry, ts: Date.now()});
     renderDocList(type);
   }
 
