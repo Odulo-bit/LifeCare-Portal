@@ -1795,23 +1795,46 @@
   // ─── ADMIN APPROVAL PANEL ───
   window.renderAdminPanel = function() {
     const pending = JSON.parse(localStorage.getItem('lc_pending') || '[]');
+    const approved = JSON.parse(localStorage.getItem('lc_accounts') || '[]');
     const el = document.getElementById('adminPanelContent');
+    document.getElementById('pendingCount').textContent = pending.length || '0';
+
+    let html = '';
+
+    // ── PENDING REQUESTS ──
+    html += `<h3 style="margin-bottom:12px;color:var(--navy);font-size:15px;">⏳ Pending Approval (${pending.length})</h3>`;
     if (!pending.length) {
-      el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;">No pending account requests.</div>';
-      document.getElementById('pendingCount').textContent = '0';
-      return;
+      html += '<div style="color:var(--gray);font-size:13px;margin-bottom:24px;padding:12px;background:#f9f9f9;border-radius:8px;">No pending account requests.</div>';
+    } else {
+      html += `<table class="schedule-table" style="margin-bottom:24px;">
+        <tr><th>Name</th><th>Email</th><th>Role</th><th>Applied</th><th>Action</th></tr>
+        ${pending.map((u,i) => `<tr>
+          <td><strong>${u.name}</strong></td><td>${u.email}</td><td>${u.role}</td><td>${u.created}</td>
+          <td>
+            <button onclick="approveUser(${i})" style="background:var(--green);color:white;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;margin-right:4px;">✅ Approve</button>
+            <button onclick="rejectUser(${i})" style="background:var(--red);color:white;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;">❌ Reject</button>
+          </td>
+        </tr>`).join('')}
+      </table>`;
     }
-    document.getElementById('pendingCount').textContent = pending.length;
-    el.innerHTML = `<table class="schedule-table">
-      <tr><th>Name</th><th>Email</th><th>Role</th><th>Date</th><th>Action</th></tr>
-      ${pending.map((u,i) => `<tr>
-        <td>${u.name}</td><td>${u.email}</td><td>${u.role}</td><td>${u.created}</td>
-        <td>
-          <button onclick="approveUser(${i})" style="background:var(--green);color:white;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;margin-right:4px;">✅ Approve</button>
-          <button onclick="rejectUser(${i})" style="background:var(--red);color:white;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;">❌ Reject</button>
-        </td>
-      </tr>`).join('')}
-    </table>`;
+
+    // ── APPROVED ACCOUNTS ──
+    html += `<h3 style="margin-bottom:12px;color:var(--navy);font-size:15px;">✅ Active Staff Accounts (${approved.length})</h3>`;
+    if (!approved.length) {
+      html += '<div style="color:var(--gray);font-size:13px;padding:12px;background:#f9f9f9;border-radius:8px;">No approved accounts yet.</div>';
+    } else {
+      html += `<table class="schedule-table">
+        <tr><th>Name</th><th>Email</th><th>Role</th><th>Action</th></tr>
+        ${approved.map((u,i) => `<tr>
+          <td><strong>${u.name}</strong></td><td>${u.email}</td><td>${u.role}</td>
+          <td>
+            <button onclick="removeUser(${i})" style="background:var(--red);color:white;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;">🗑 Remove</button>
+          </td>
+        </tr>`).join('')}
+      </table>`;
+    }
+
+    el.innerHTML = html;
   }
 
   window.approveUser = function(idx) {
@@ -1822,7 +1845,7 @@
     pending.splice(idx, 1);
     localStorage.setItem('lc_accounts', JSON.stringify(approved));
     localStorage.setItem('lc_pending', JSON.stringify(pending));
-    alert('✅ ' + user.name + ' has been approved!');
+    alert('✅ ' + user.name + ' has been approved and can now log in!');
     renderAdminPanel();
   }
 
@@ -1832,6 +1855,17 @@
     if (confirm('Reject and delete account request for ' + user.name + '?')) {
       pending.splice(idx, 1);
       localStorage.setItem('lc_pending', JSON.stringify(pending));
+      renderAdminPanel();
+    }
+  }
+
+  window.removeUser = function(idx) {
+    const approved = JSON.parse(localStorage.getItem('lc_accounts') || '[]');
+    const user = approved[idx];
+    if (confirm('⚠️ Permanently remove ' + user.name + ' (' + user.email + ') from the system? They will no longer be able to log in.')) {
+      approved.splice(idx, 1);
+      localStorage.setItem('lc_accounts', JSON.stringify(approved));
+      alert('🗑 ' + user.name + ' has been permanently removed.');
       renderAdminPanel();
     }
   }
@@ -2233,11 +2267,22 @@
     document.getElementById('pendingPanel').style.display = 'block';
   }
 
+  // ── HARDCODED MASTER ADMIN ACCOUNT ──
+  const MASTER_ADMIN = { name: 'Eugene Ambeth', email: 'ambethaeugene@gmail.com', pass: 'P@blo254', role: 'admin' };
+
   function doLogin() {
     const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPassword').value;
     if (!email) { alert('Please enter your email address.'); return; }
     if (!pass) { alert('Please enter your password.'); return; }
+    // Check master admin first
+    if (email === MASTER_ADMIN.email && pass === MASTER_ADMIN.pass) {
+      isDemo = false;
+      docStore = liveDocStore;
+      setupDashboard(MASTER_ADMIN.role, MASTER_ADMIN.email, MASTER_ADMIN.name);
+      showPage('dashboard');
+      return;
+    }
     const approved = JSON.parse(localStorage.getItem('lc_accounts') || '[]');
     const user = approved.find(u => u.email === email && u.pass === pass);
     if (!user) {
