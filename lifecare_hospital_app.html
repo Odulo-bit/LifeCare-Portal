@@ -752,6 +752,8 @@
     .emergency-btn { font-size: 12px !important; padding: 8px 12px !important; }
     .top-bar-right { gap: 8px !important; }
     .top-search { display: none !important; }
+    .menu-label { display: none; }
+    .menu-item { min-width: 52px !important; }
   }
 
   /* Mobile hamburger toggle for sidebar on tablet */
@@ -1176,7 +1178,7 @@
 </div>
 
 <!-- ════════════════ DASHBOARD ════════════════ -->
-<div id="dashboard" class="page">
+<div id="dashboard" class="page" style="display:flex;">
   <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-logo">
@@ -1192,63 +1194,63 @@
     <div class="sidebar-menu">
       <div class="menu-section">Main</div>
       <div class="menu-item active" onclick="showSection('overview', this)">
-        <span class="icon">🏠</span> Overview
+        <span class="icon">🏠</span><span class="menu-label"> Overview</span>
       </div>
       <div class="menu-item" onclick="showSection('patients', this)">
-        <span class="icon">👥</span> Patients
+        <span class="icon">👥</span><span class="menu-label"> Patients</span>
         <span class="badge">12</span>
       </div>
       <div class="menu-item" onclick="showSection('schedule', this)">
-        <span class="icon">📅</span> Schedule
+        <span class="icon">📅</span><span class="menu-label"> Schedule</span>
       </div>
       <div class="menu-section">Clinical</div>
       <div class="menu-item" onclick="showSection('lab', this)">
-        <span class="icon">🧪</span> Laboratory
+        <span class="icon">🧪</span><span class="menu-label"> Lab</span>
         <span class="badge">3</span>
       </div>
       <div class="menu-item" onclick="showSection('pharmacy', this)">
-        <span class="icon">💊</span> Pharmacy
+        <span class="icon">💊</span><span class="menu-label"> Pharmacy</span>
       </div>
       <div class="menu-item" onclick="showSection('lounge', this)">
-        <span class="icon">💬</span> Doctors Lounge
+        <span class="icon">💬</span><span class="menu-label"> Lounge</span>
       </div>
       <div class="menu-section">Admin</div>
       <div class="menu-item" onclick="showSection('hr', this)">
-        <span class="icon">🗂</span> HR & Leave
+        <span class="icon">🗂</span><span class="menu-label"> HR</span>
       </div>
       <div class="menu-item" onclick="showSection('reports', this)">
-        <span class="icon">📊</span> Reports
+        <span class="icon">📊</span><span class="menu-label"> Reports</span>
       </div>
       <div class="menu-item" onclick="showSection('gallery', this)">
-        <span class="icon">🖼</span> Gallery
+        <span class="icon">🖼</span><span class="menu-label"> Gallery</span>
       </div>
       <div class="menu-item" onclick="showSection('contacts', this)">
-        <span class="icon">📞</span> Contacts & Map
+        <span class="icon">📞</span><span class="menu-label"> Contacts</span>
       </div>
       <div class="menu-item" onclick="showSection('docs', this)">
-        <span class="icon">📝</span> Documentation
+        <span class="icon">📝</span><span class="menu-label"> Docs</span>
       </div>
       <div class="menu-item" onclick="showSection('ordering', this)">
-        <span class="icon">🛒</span> Order Supplies
+        <span class="icon">🛒</span><span class="menu-label"> Orders</span>
       </div>
       <div class="menu-item" onclick="showSection('ip', this)">
-        <span class="icon">🏷</span> IP Labels & Issues
+        <span class="icon">🏷</span><span class="menu-label"> IP</span>
       </div>
       <div class="menu-item" id="adminApprovalMenu" style="display:none;" onclick="showSection('adminApproval', this)">
-        <span class="icon">✅</span> Staff Approvals
+        <span class="icon">✅</span><span class="menu-label"> Approvals</span>
         <span class="badge" id="pendingCount">0</span>
       </div>
       <div class="menu-item" id="adminOrdersMenu" style="display:none;" onclick="showSection('adminOrders', this)">
-        <span class="icon">📦</span> All Orders
+        <span class="icon">📦</span><span class="menu-label"> All Orders</span>
       </div>
       <div class="menu-item" id="adminIncidentsMenu" style="display:none;" onclick="showSection('adminIncidents', this)">
-        <span class="icon">⚠️</span> All Incidents
+        <span class="icon">⚠️</span><span class="menu-label"> Incidents</span>
       </div>
       <div class="menu-item" id="adminStaffMenu" style="display:none;" onclick="showSection('adminStaff', this)">
-        <span class="icon">👥</span> Staff List
+        <span class="icon">👥</span><span class="menu-label"> Staff</span>
       </div>
       <div class="menu-item" id="adminAnnounceMenu" style="display:none;" onclick="showSection('adminAnnounce', this)">
-        <span class="icon">📢</span> Announcements
+        <span class="icon">📢</span><span class="menu-label"> Announce</span>
       </div>
     </div>
     <div class="sidebar-logout">
@@ -1260,13 +1262,16 @@
   <div class="main-content">
     <div class="mobile-header" style="display:none;position:sticky;top:0;z-index:50;background:var(--navy);color:white;padding:10px 16px;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
       <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;" id="mobileAvatar">DR</div>
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;" id="mobileAvatar">DR</div>
         <div>
           <div style="font-size:13px;font-weight:600;" id="mobileName">Staff</div>
           <div style="font-size:10px;opacity:0.7;" id="mobileRole">Loading...</div>
         </div>
       </div>
-      <div style="font-size:11px;opacity:0.8;" id="mobileSectionTitle">Dashboard</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:11px;opacity:0.8;max-width:100px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="mobileSectionTitle">Dashboard</div>
+        <button onclick="showPage('landing')" style="background:rgba(255,255,255,0.15);color:white;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:11px;font-family:inherit;">⏻ Out</button>
+      </div>
     </div>
     <div class="top-bar">
       <h1 id="sectionTitle">Dashboard Overview</h1>
