@@ -954,6 +954,18 @@
         <span class="icon">✅</span> Staff Approvals
         <span class="badge" id="pendingCount">0</span>
       </div>
+      <div class="menu-item" id="adminOrdersMenu" style="display:none;" onclick="showSection('adminOrders', this)">
+        <span class="icon">📦</span> All Orders
+      </div>
+      <div class="menu-item" id="adminIncidentsMenu" style="display:none;" onclick="showSection('adminIncidents', this)">
+        <span class="icon">⚠️</span> All Incidents
+      </div>
+      <div class="menu-item" id="adminStaffMenu" style="display:none;" onclick="showSection('adminStaff', this)">
+        <span class="icon">👥</span> Staff List
+      </div>
+      <div class="menu-item" id="adminAnnounceMenu" style="display:none;" onclick="showSection('adminAnnounce', this)">
+        <span class="icon">📢</span> Announcements
+      </div>
     </div>
     <div class="sidebar-logout">
       <button onclick="showPage('landing')">⏻ Sign Out</button>
@@ -1776,6 +1788,82 @@
         </div>
       </div>
 
+      <!-- ─── ADMIN: ALL ORDERS ─── -->
+      <div id="sec-adminOrders" class="section">
+        <div class="card">
+          <div class="card-header">
+            <h3>📦 All Department Orders</h3>
+            <button onclick="renderAdminOrders()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">🔄 Refresh</button>
+          </div>
+          <div class="card-body" id="adminOrdersContent">
+            <div style="color:var(--gray);text-align:center;padding:20px;">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ADMIN: ALL INCIDENTS ─── -->
+      <div id="sec-adminIncidents" class="section">
+        <div class="card">
+          <div class="card-header">
+            <h3>⚠️ All Incident Reports</h3>
+            <button onclick="renderAdminIncidents()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">🔄 Refresh</button>
+          </div>
+          <div class="card-body" id="adminIncidentsContent">
+            <div style="color:var(--gray);text-align:center;padding:20px;">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ADMIN: STAFF LIST ─── -->
+      <div id="sec-adminStaff" class="section">
+        <div class="card">
+          <div class="card-header">
+            <h3>👥 Staff List & Password Reset</h3>
+            <button onclick="renderAdminStaff()" style="background:var(--teal);color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">🔄 Refresh</button>
+          </div>
+          <div class="card-body" id="adminStaffContent">
+            <div style="color:var(--gray);text-align:center;padding:20px;">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ADMIN: ANNOUNCEMENTS ─── -->
+      <div id="sec-adminAnnounce" class="section">
+        <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:20px;">
+          <div class="card">
+            <div class="card-header"><h3>📢 Post Announcement to All Departments</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="ann-title" placeholder="e.g. Hospital-wide Safety Drill — March 10">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select id="ann-category">
+                  <option>General</option>
+                  <option>Policy Update</option>
+                  <option>Training / Education</option>
+                  <option>Reminder</option>
+                  <option>Emergency</option>
+                  <option>HR Notice</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message</label>
+                <textarea id="ann-message" rows="5" placeholder="Write your announcement here..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:13px;resize:vertical;"></textarea>
+              </div>
+              <button onclick="postAnnouncement()" style="background:var(--teal);color:white;border:none;padding:12px 24px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit;width:100%;">📢 Post to All Departments</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>📋 Posted Announcements</h3></div>
+            <div class="card-body" id="adminAnnounceList" style="max-height:460px;overflow-y:auto;">
+              <div style="color:var(--gray);text-align:center;padding:20px;font-size:13px;">No announcements posted yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ─── ADMIN APPROVAL ─── -->
       <div id="sec-adminApproval" class="section">
         <div class="card">
@@ -1792,6 +1880,12 @@
 </div><!-- /dashboard -->
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── GLOBAL STATE VARIABLES (declared first so all functions can access them) ──
+  var isDemo = false;
+  var currentRole = 'doctor';
+  var demoDocStore = {};
+  var liveDocStore = { handover: [], clinical: [], incident: [], notice: [] };
+  var docStore = liveDocStore;
   // ─── ADMIN APPROVAL PANEL ───
   window.renderAdminPanel = function() {
     const pending = JSON.parse(localStorage.getItem('lc_pending') || '[]');
@@ -1870,7 +1964,149 @@
     }
   }
 
-  // ─── ORDERING SYSTEM ───
+  // ─── ADMIN: VIEW ALL ORDERS ───
+  window.renderAdminOrders = function() {
+    const el = document.getElementById('adminOrdersContent');
+    if (!el) return;
+    const orders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
+    if (!orders.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;">No orders placed yet across any department.</div>'; return; }
+    const sorted = [...orders].reverse();
+    el.innerHTML = `<table class="schedule-table">
+      <tr><th>Order ID</th><th>Item</th><th>Qty</th><th>Department</th><th>Priority</th><th>Date</th><th>Status</th><th>Action</th></tr>
+      ${sorted.map((o, i) => {
+        const pColor = o.priority === 'urgent' ? '#E53E3E' : o.priority === 'normal' ? '#DD6B20' : '#38A169';
+        const sColor = o.status === 'fulfilled' ? '#38A169' : o.status === 'rejected' ? '#E53E3E' : '#DD6B20';
+        const realIdx = orders.indexOf(o);
+        return `<tr>
+          <td style="font-size:11px;">${o.id}</td>
+          <td><strong>${o.item}</strong></td>
+          <td>${o.qty} ${o.unit}</td>
+          <td>${o.dept}</td>
+          <td style="color:${pColor};font-weight:700;font-size:11px;">${o.priority.toUpperCase()}</td>
+          <td style="font-size:11px;">${o.date}</td>
+          <td style="color:${sColor};font-weight:700;font-size:11px;">${o.status.toUpperCase()}</td>
+          <td>${o.status === 'pending' ? `
+            <button onclick="adminFulfil(${realIdx})" style="background:var(--green);color:white;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:2px;">✅</button>
+            <button onclick="adminReject(${realIdx})" style="background:var(--red);color:white;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;">❌</button>
+          ` : '—'}</td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+  }
+
+  window.adminFulfil = function(i) {
+    const orders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
+    orders[i].status = 'fulfilled';
+    orders[i].fulfilledDate = new Date().toLocaleDateString('en-GB');
+    localStorage.setItem('lc_orders', JSON.stringify(orders));
+    allOrders.length = 0; allOrders.push(...orders);
+    renderAdminOrders();
+  }
+
+  window.adminReject = function(i) {
+    const reason = prompt('Reason for rejection:') || 'Rejected by admin';
+    const orders = JSON.parse(localStorage.getItem('lc_orders') || '[]');
+    orders[i].status = 'rejected';
+    orders[i].rejectReason = reason;
+    localStorage.setItem('lc_orders', JSON.stringify(orders));
+    allOrders.length = 0; allOrders.push(...orders);
+    renderAdminOrders();
+  }
+
+  // ─── ADMIN: VIEW ALL INCIDENTS ───
+  window.renderAdminIncidents = function() {
+    const el = document.getElementById('adminIncidentsContent');
+    if (!el) return;
+    // Gather from both live and demo stores
+    const allIncidents = [...(liveDocStore.incident || []), ...(demoDocStore.incident || [])];
+    if (!allIncidents.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:30px;">No incident reports filed yet.</div>'; return; }
+    el.innerHTML = `<table class="schedule-table">
+      <tr><th>Type</th><th>Department</th><th>Location</th><th>Urgency</th><th>Date</th><th>Filed By</th><th>Description</th></tr>
+      ${allIncidents.slice().reverse().map(r => {
+        const uColor = r.urgency === 'high' ? '#E53E3E' : r.urgency === 'medium' ? '#DD6B20' : '#38A169';
+        return `<tr>
+          <td><strong>${r.itype || '—'}</strong></td>
+          <td>${r.dept}</td>
+          <td>${r.loc || '—'}</td>
+          <td style="color:${uColor};font-weight:700;font-size:11px;">${(r.urgency||'').toUpperCase()}</td>
+          <td style="font-size:11px;">${r.postedAt}</td>
+          <td>${r.postedBy}</td>
+          <td style="font-size:12px;max-width:200px;">${(r.desc||'').substring(0,80)}${r.desc && r.desc.length>80?'...':''}</td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+  }
+
+  // ─── ADMIN: STAFF LIST & PASSWORD RESET ───
+  window.renderAdminStaff = function() {
+    const el = document.getElementById('adminStaffContent');
+    if (!el) return;
+    const approved = JSON.parse(localStorage.getItem('lc_accounts') || '[]');
+    // Always include master admin in view
+    const allStaff = [
+      { name: 'Eugene Ambeth', email: 'ambethaeugene@gmail.com', role: 'admin', isMaster: true },
+      ...approved
+    ];
+    el.innerHTML = `
+      <div style="margin-bottom:16px;padding:12px;background:#f0f8fb;border-radius:8px;font-size:13px;color:var(--navy);">
+        <strong>Total Staff: ${allStaff.length}</strong> &nbsp;|&nbsp; Approved Accounts: ${approved.length} &nbsp;|&nbsp; Pending: ${JSON.parse(localStorage.getItem('lc_pending')||'[]').length}
+      </div>
+      <table class="schedule-table">
+        <tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+        ${allStaff.map((u, i) => `<tr>
+          <td><strong>${u.name}</strong>${u.isMaster ? ' <span style="font-size:10px;background:var(--teal);color:white;padding:1px 6px;border-radius:10px;">Master Admin</span>' : ''}</td>
+          <td style="font-size:12px;">${u.email}</td>
+          <td style="font-size:12px;">${u.role}</td>
+          <td>${u.isMaster ? '—' : `
+            <button onclick="resetPassword(${i-1})" style="background:var(--orange);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">🔑 Reset Password</button>
+            <button onclick="removeUser(${i-1})" style="background:var(--red);color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">🗑 Remove</button>
+          `}</td>
+        </tr>`).join('')}
+      </table>`;
+  }
+
+  window.resetPassword = function(idx) {
+    const approved = JSON.parse(localStorage.getItem('lc_accounts') || '[]');
+    const user = approved[idx];
+    const newPass = prompt(`Set new password for ${user.name}:`);
+    if (!newPass || newPass.length < 6) { alert('Password must be at least 6 characters.'); return; }
+    approved[idx].pass = newPass;
+    localStorage.setItem('lc_accounts', JSON.stringify(approved));
+    alert(`✅ Password reset for ${user.name}. New password: ${newPass}`);
+  }
+
+  // ─── ADMIN: POST ANNOUNCEMENTS TO ALL DEPARTMENTS ───
+  window.postAnnouncement = function() {
+    const title = document.getElementById('ann-title').value.trim();
+    const category = document.getElementById('ann-category').value;
+    const message = document.getElementById('ann-message').value.trim();
+    if (!title || !message) { alert('Please fill in title and message.'); return; }
+    const now = new Date();
+    const timeStr = now.toLocaleString('en-GB', {day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    // Post to ALL departments by using 'All Departments' as dept
+    const entry = { dept: 'All Departments', title, category, message, postedBy: 'Admin — Eugene Ambeth', postedAt: timeStr };
+    liveDocStore.notice.unshift(entry);
+    document.getElementById('ann-title').value = '';
+    document.getElementById('ann-message').value = '';
+    renderAdminAnnouncements();
+    alert('📢 Announcement posted to all departments!');
+  }
+
+  function renderAdminAnnouncements() {
+    const el = document.getElementById('adminAnnounceList');
+    if (!el) return;
+    const notices = liveDocStore.notice || [];
+    if (!notices.length) { el.innerHTML = '<div style="color:var(--gray);text-align:center;padding:20px;font-size:13px;">No announcements posted yet.</div>'; return; }
+    el.innerHTML = notices.map(n => `
+      <div style="border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <strong style="font-size:14px;">${n.title}</strong>
+          <span style="font-size:11px;background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:10px;">${n.category}</span>
+        </div>
+        <p style="font-size:13px;color:var(--navy);margin-bottom:8px;">${n.message}</p>
+        <div style="font-size:11px;color:var(--gray);">📢 ${n.dept} &nbsp;|&nbsp; By ${n.postedBy} &nbsp;|&nbsp; ${n.postedAt}</div>
+      </div>`).join('');
+  }
   // Stock is managed by Procurement only. Other departments order from the stock catalogue.
   const noOrderRoles = ['admin','hr','finance'];
   const ipIssueLog = [];
@@ -2167,11 +2403,19 @@
       lounge: "Doctors' Lounge", hr: 'HR & Leave', reports: 'Reports & Analytics',
       gallery: 'Gallery', contacts: 'Contacts & Location', docs: '📝 Documentation',
       ordering: '🛒 Order Supplies', ip: '🏷 IP Labels & Issues',
-      adminApproval: '✅ Staff Account Approvals'
+      adminApproval: '✅ Staff Account Approvals',
+      adminOrders: '📦 All Department Orders',
+      adminIncidents: '⚠️ All Incident Reports',
+      adminStaff: '👥 Staff List & Management',
+      adminAnnounce: '📢 Post Announcements'
     };
     document.getElementById('sectionTitle').textContent = titles[name] || name;
     if (name === 'ordering') renderOrderingSection();
     if (name === 'adminApproval') renderAdminPanel();
+    if (name === 'adminOrders') renderAdminOrders();
+    if (name === 'adminIncidents') renderAdminIncidents();
+    if (name === 'adminStaff') renderAdminStaff();
+    if (name === 'adminAnnounce') renderAdminAnnouncements();
   }
 
   // IP LABEL
@@ -2298,37 +2542,51 @@
   }
 
   function setupDashboard(role, id, displayName) {
-    const roleMap = {
-      doctor:         ['Dr. Amara',      'Senior Doctor',                  'DR'],
-      nurse:          ['Nurse Ama',       'Senior Nurse',                   'NA'],
-      theatre_nurse:  ['Nurse Zawadi',    'Theatre Nurse',                  'TN'],
-      tt:             ['Tech Kamau',      'Theatre Technician',             'TT'],
-      ward_icu:       ['Staff Wanjiku',   'ICU Nurse',                      'IC'],
-      ward_renal:     ['Staff Otieno',    'Renal Unit Nurse',               'RN'],
-      ward_male:      ['Staff Mwangi',    'Male Ward Nurse',                'MW'],
-      ward_female:    ['Staff Njeri',     'Female Ward Nurse',              'FW'],
-      ward_children:  ['Staff Akinyi',    'Children Ward Nurse',            'CW'],
-      ward_general:   ['Staff Kimani',    'General Ward Nurse',             'GW'],
-      ward_maternity: ['Staff Chebet',    'Maternity Ward Nurse',           'MT'],
-      lab:            ['Lab. Yaw',        'Lab Technician',                 'LY'],
-      pharmacy:       ['Pharm. Esi',      'Pharmacist',                     'PE'],
-      procurement:    ['Mr. Njoroge',     'Procurement Officer',            'PR'],
-      surgical_shop:  ['Mr. Odhiambo',   'Surgical Shop Officer',          'SS'],
-      admin:          ['Mr. Kofi',        'Administrator',                  'MK'],
-      hr:             ['Ms. Abena',       'HR Manager',                     'MA'],
-      finance:        ['Mr. Kwesi',       'Finance Officer',                'FO'],
+    const roleTitles = {
+      doctor:         'Doctor',
+      nurse:          'Nurse',
+      theatre_nurse:  'Theatre Nurse',
+      tt:             'Theatre Technician',
+      ward_icu:       'ICU Nurse',
+      ward_renal:     'Renal Unit Nurse',
+      ward_male:      'Male Ward Nurse',
+      ward_female:    'Female Ward Nurse',
+      ward_children:  'Children Ward Nurse',
+      ward_general:   'General Ward Nurse',
+      ward_maternity: 'Maternity Ward Nurse',
+      lab:            'Lab Technician',
+      pharmacy:       'Pharmacist',
+      procurement:    'Procurement Officer',
+      surgical_shop:  'Surgical Shop Officer',
+      admin:          'Administrator',
+      hr:             'HR Manager',
+      finance:        'Finance Officer',
     };
-    const info = roleMap[role] || roleMap['doctor'];
-    const nameToUse = displayName || info[0];
+    const deptNames = {
+      doctor: 'Medical', nurse: 'Nursing', theatre_nurse: 'Theatre', tt: 'Theatre',
+      ward_icu: 'ICU', ward_renal: 'Renal Unit', ward_male: 'Male Ward',
+      ward_female: 'Female Ward', ward_children: 'Children Ward',
+      ward_general: 'General Ward', ward_maternity: 'Maternity',
+      lab: 'Laboratory', pharmacy: 'Pharmacy', procurement: 'Procurement',
+      surgical_shop: 'Surgical Shop', admin: 'Administration',
+      hr: 'Human Resources', finance: 'Finance',
+    };
+    const nameToUse = displayName || 'Staff Member';
     const initials = nameToUse.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    const roleTitle = roleTitles[role] || 'Staff';
+    const deptName = deptNames[role] || role;
+
     document.getElementById('sidebarName').textContent = nameToUse;
-    document.getElementById('sidebarRole').textContent = info[1];
+    document.getElementById('sidebarRole').textContent = roleTitle + ' — ' + deptName;
     document.getElementById('sideAvatar').textContent = initials;
     document.getElementById('topAvatar').textContent = initials;
     document.getElementById('chatAvatar').textContent = initials;
     const hour = new Date().getHours();
     const shiftGreeting = (hour >= 7 && hour < 19) ? `☀️ Day Shift, ${nameToUse}!` : `🌙 Night Shift, ${nameToUse}!`;
     document.getElementById('welcomeMsg').textContent = shiftGreeting;
+    // Update welcome subtitle
+    const welcomeSub = document.querySelector('.welcome-text p');
+    if (welcomeSub) welcomeSub.textContent = `Welcome to the ${deptName} dashboard. Have a great shift!`;
     const now = new Date();
     document.getElementById('todayDate').textContent = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
     currentRole = role;
@@ -2337,10 +2595,18 @@
     const adminMenu = document.getElementById('adminApprovalMenu');
     if (role === 'admin') {
       adminMenu.style.display = 'flex';
+      document.getElementById('adminOrdersMenu').style.display = 'flex';
+      document.getElementById('adminIncidentsMenu').style.display = 'flex';
+      document.getElementById('adminStaffMenu').style.display = 'flex';
+      document.getElementById('adminAnnounceMenu').style.display = 'flex';
       const pending = JSON.parse(localStorage.getItem('lc_pending') || '[]');
       document.getElementById('pendingCount').textContent = pending.length;
     } else {
       adminMenu.style.display = 'none';
+      document.getElementById('adminOrdersMenu').style.display = 'none';
+      document.getElementById('adminIncidentsMenu').style.display = 'none';
+      document.getElementById('adminStaffMenu').style.display = 'none';
+      document.getElementById('adminAnnounceMenu').style.display = 'none';
     }
     refreshAllDocLists();
   }
@@ -2367,7 +2633,7 @@
     finance:        'HR & Finance',
   };
   // ── DEMO sample data (only loaded when demo button is used) ──
-  const demoDocStore = {
+  demoDocStore = {
     handover: [
       { dept:'Theatre', shift:'Day Shift (7AM–7PM)', date:'27 Feb 2026', ward:'Theatre 1 & 2', patients:'Patient Kofi Asante (Hernia Repair, Theatre 1) — ensure NPO confirmed before 1PM case. Patient Mary Adjei (C-Section, Theatre 2) — currently in progress, blood group O+, 2 units crossmatched.', tasks:'Restock suture tray Theatre 1. Autoclave cycle due at 12PM — Tech Kamau to confirm.', notes:'Night team to check anaesthetic machine calibration before first case. Good luck!', postedBy:'Nurse Zawadi', postedAt:'27 Feb 2026, 06:50' },
       { dept:'ICU', shift:'Night Shift (7PM–7AM)', date:'26 Feb 2026', ward:'ICU', patients:'Abena Nkrumah (Bed 2) — cardiac, on noradrenaline 0.08mcg/kg/min, monitor MAP >65. James Otieno (Bed 5) — post-dialysis, K+ 5.8 on last result, recheck at 2AM.', tasks:'ABG on Abena due at midnight. Vasopressor weaning protocol to be reviewed by on-call doctor.', notes:'Quiet night otherwise. Relatives of Abena called at 9PM — update them at morning round.', postedBy:'Nurse Wanjiku', postedAt:'26 Feb 2026, 19:05' },
@@ -2395,15 +2661,6 @@
       { dept:'Pharmacy', title:'Controlled Drug Stock Count — Every Friday', category:'Reminder', message:'Controlled drug reconciliation is mandatory every Friday at 6:30PM. Day pharmacist and incoming night nurse must both sign off the register.', postedBy:'Pharm. Esi', postedAt:'21 Feb 2026, 15:00' },
     ]
   };
-
-  // ── LIVE store — starts empty for real staff logins ──
-  const liveDocStore = { handover: [], clinical: [], incident: [], notice: [] };
-
-  // Active store — switches based on login type
-  let docStore = liveDocStore;
-  let isDemo = false;
-
-
 
   function getCurrentDept() {
     return roleDeptMap[currentRole] || 'General';
@@ -2469,7 +2726,7 @@
 
   function renderDocList(type) {
     const dept = getCurrentDept();
-    const filtered = docStore[type].filter(e => e.dept === dept);
+    const filtered = docStore[type].filter(e => e.dept === dept || e.dept === 'All Departments');
     const prefixes = { handover:'ho', clinical:'cn', incident:'ir', notice:'nb' };
     const pre = prefixes[type];
     const listEl = document.getElementById(pre + '-list');
